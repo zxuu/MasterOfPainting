@@ -1,193 +1,62 @@
 package com.zxu.masterofpainting;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.ContentUris;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URI;
+import android.widget.TabHost;
+import android.widget.TextView;
+import com.zxu.masterofpainting.bean.Tab;
+import com.zxu.masterofpainting.fragment.LookFragment;
+import com.zxu.masterofpainting.fragment.PhotoInfoFragment;
+import com.zxu.masterofpainting.fragment.TakePhotoFragment;
+import com.zxu.masterofpainting.fragment.UserInfoFragment;
+import com.zxu.masterofpainting.widget.FragmentTabHost;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
-    public static final int TAKE_PHOTO = 1;
-    public static final int CHOSE_PHOTO = 2;
-    private ImageView picture;
-    private Button takepicture;
-    private Button chosephoto;
-    private Uri imageUri;
+
+    private FragmentTabHost mTabhost;
+    private LayoutInflater mInflater;
+    private List<Tab> mTabs = new ArrayList<>(4);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        iniview();
+        initTab();
     }
 
-    public void iniview(){
-        picture = (ImageView) findViewById(R.id.picture);
-        takepicture = (Button) findViewById(R.id.take_photo);
-        chosephoto = (Button) findViewById(R.id.chose_from_album);
-        takepicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePhoto();
-            }
-        });
-        chosephoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chosePhoto();
-            }
-        });
-    }
+    private void initTab() {
+        Tab tab_takephoto = new Tab(TakePhotoFragment.class,R.string.takephoto,R.drawable.selector_icon_takephoto);
+        Tab tab_photoinfo = new Tab(PhotoInfoFragment.class,R.string.photoinfo,R.drawable.selector_icon_photoinfo);
+        Tab tab_look = new Tab(LookFragment.class,R.string.look,R.drawable.selector_icon_look);
+        Tab tab_user = new Tab(UserInfoFragment.class,R.string.user,R.drawable.selector_user_info);
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent("android.intent.action.GET_CONTENT");
-                    intent.setType("image/*");
-                    startActivityForResult(intent, CHOSE_PHOTO); // 打开相册
-                } else {
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
+        mTabs.add(tab_takephoto);
+        mTabs.add(tab_photoinfo);
+        mTabs.add(tab_look);
+        mTabs.add(tab_user);
+        mInflater = LayoutInflater.from(this);
+        mTabhost = (FragmentTabHost) this.findViewById(R.id.tabhost);
+        mTabhost.setup(this,getSupportFragmentManager(),R.id.realtabcontent);
+
+        for (Tab tab : mTabs){
+            TabHost.TabSpec tabSpec = mTabhost.newTabSpec(getString(tab.getTitle()));
+            tabSpec.setIndicator(buildIndicator(tab));
+            mTabhost.addTab(tabSpec,tab.getFragment(),null);
+
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case TAKE_PHOTO:
-                if (resultCode == RESULT_OK) {
-                    try {
-                        //将拍摄的照片显示出来
-                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver()
-                                .openInputStream(imageUri));
-                        picture.setImageBitmap(bitmap);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-                break;
-            case CHOSE_PHOTO:
-                if (resultCode == RESULT_OK) {
-                    //判断手机版本号
-                    if (Build.VERSION.SDK_INT >= 19) {
-                        //4.4及以上系统
-                        String imagePath = null;
-                        Uri uri = data.getData();
-                        Log.d("TAG", "handleImageOnKitKat: uri is " + uri);
-                        if (DocumentsContract.isDocumentUri(this, uri)) {
-                            // 如果是document类型的Uri，则通过document id处理
-                            String docId = DocumentsContract.getDocumentId(uri);
-                            if("com.android.providers.media.documents".equals(uri.getAuthority())) {
-                                String id = docId.split(":")[1]; // 解析出数字格式的id
-                                String selection = MediaStore.Images.Media._ID + "=" + id;
-                                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
-                            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
-                                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
-                                imagePath = getImagePath(contentUri, null);
-                            }
-                        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-                            // 如果是content类型的Uri，则使用普通方式处理
-                            imagePath = getImagePath(uri, null);
-                        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-                            // 如果是file类型的Uri，直接获取图片路径即可
-                            imagePath = uri.getPath();
-                        }
-                        displayImage(imagePath); // 根据图片路径显示图片
-                    } else {
-                        //4.4版本以下
-                        Uri uri = data.getData();
-                        String imagePath = getImagePath(uri, null);
-                        displayImage(imagePath);
-                    }
-                }
-                break;
-                default:
-                    break;
-        }
-    }
-
-    public void takePhoto(){
-            // 创建File对象，用于存储拍照后的图片
-            File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
-            try {
-                if (outputImage.exists()) {
-                    outputImage.delete();
-                }
-                outputImage.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (Build.VERSION.SDK_INT < 24) {
-                imageUri = Uri.fromFile(outputImage);
-            } else {
-                imageUri = FileProvider.getUriForFile(MainActivity.this, "com.zxu.masterofpainting.fileprovider", outputImage);
-            }
-            // 启动相机程序
-            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(intent, TAKE_PHOTO);
-        }
-
-    public void chosePhoto() {
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1 );
-        } else {
-            Intent intent = new Intent("android.intent.action.GET_CONTENT");
-            intent.setType("image/*");
-            startActivityForResult(intent, CHOSE_PHOTO);
-        }
-    }
-
-    private String getImagePath(Uri uri, String selection) {
-        String path = null;
-        // 通过Uri和selection来获取真实的图片路径
-        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            }
-            cursor.close();
-        }
-        return path;
-    }
-
-    private void displayImage(String imagePath) {
-        if (imagePath != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            picture.setImageBitmap(bitmap);
-        } else {
-            Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
-        }
+    private  View buildIndicator(Tab tab){
+        View view =mInflater.inflate(R.layout.tab_indicator,null);
+        ImageView img = (ImageView) view.findViewById(R.id.icon_tab);
+        TextView text = (TextView) view.findViewById(R.id.txt_indicator);
+        img.setBackgroundResource(tab.getIcon());
+        text.setText(tab.getTitle());
+        return  view;
     }
 }
