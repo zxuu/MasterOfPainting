@@ -19,6 +19,19 @@ allprojects {
     repositories {
         google()
         jcenter()
+        //Bmob的maven仓库地址--必填
+        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
+        mavenLocal()
+        maven {
+            url 'https://maven.google.com'
+        }
+        maven {
+            url "https://jitpack.io"
+        }
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
     }
 }
 

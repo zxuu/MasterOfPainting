@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -18,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,16 +29,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.zxu.masterofpainting.MainActivity;
 import com.zxu.masterofpainting.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static android.app.Activity.RESULT_OK;
 
 public class TakePhotoFragment extends Fragment {
+    private Handler handler = null;
+    private Bitmap bitmap;
     public static final int TAKE_PHOTO = 1;
     public static final int CHOSE_PHOTO = 2;
     private ImageView picture;
@@ -47,12 +55,37 @@ public class TakePhotoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.take_photo_fragment,container,false);
+        handler = new Handler();
+
+//        Bmob.initialize(getContext(),"76812c82e0ab48d59679f2590f429963");
+//        BmobQuery<test7> bmobQuery = new BmobQuery<>();
+//        bmobQuery.getObject("20c401fffc", new QueryListener<test7>() {
+//            @Override
+//            public void done(test7 test6, BmobException e) {
+//                byte[] photostr = test6.getImage();
+//                if (photostr != null) {
+////                    if (GenerateImage(photostr)){
+////                        Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
+////                    } else {
+////                        Toast.makeText(getContext(), "shibai", Toast.LENGTH_SHORT).show();
+////                    }
+//                    if (getPicFromBytes(photostr) != null) {
+//                        Toast.makeText(getContext(), "notnull", Toast.LENGTH_SHORT).show();
+//                        picture.setImageBitmap(getPicFromBytes(photostr));
+//                    }
+//                } else {
+//                    Toast.makeText(getContext(), "hpotoisnull", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+
         iniview(view);
+
         return view;
     }
 
     public void iniview(View view){
-        picture = (ImageView) view.findViewById(R.id.picture);
+        picture = (ImageView) view.findViewById(R.id.face_image_view);
         takepicture = (Button) view.findViewById(R.id.take_photo);
         chosephoto = (Button) view.findViewById(R.id.chose_from_album);
         takepicture.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +194,16 @@ public class TakePhotoFragment extends Fragment {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, TAKE_PHOTO);
 //        startActivity(new Intent(getContext(),LookFragment.class));
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                bitmap = getBitmap("http://bmob-cdn-22072.b0.upaiyun.com/2018/10/25/42f25db6400e3c2880e1fb79c60cfa10.png");
+//                if (bitmap != null) {
+//                    handler.post(runnableUi);
+//                }
+//            }
+//        }).start();
+
     }
 
     public void chosePhoto() {
@@ -196,4 +239,35 @@ public class TakePhotoFragment extends Fragment {
             Toast.makeText(getContext(), "failed to get image", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public  Bitmap getBitmap(String url) {
+        URL imageURL = null;
+        Bitmap bitmap = null;
+        Log.e("inuni","URL = "+url);
+        try {
+            imageURL = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpURLConnection conn = (HttpURLConnection) imageURL
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    Runnable runnableUi = new Runnable() {
+        @Override
+        public void run() {
+            picture.setImageBitmap(bitmap);
+        }
+    };
 }

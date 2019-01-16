@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.zxu.masterofpainting.bean.Tab;
 import com.zxu.masterofpainting.fragment.LookFragment;
 import com.zxu.masterofpainting.fragment.PhotoInfoFragment;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Fresco.initialize(this);
         initTab();
     }
 
@@ -59,4 +63,6 @@ public class MainActivity extends AppCompatActivity{
         text.setText(tab.getTitle());
         return  view;
     }
+
+
 }
