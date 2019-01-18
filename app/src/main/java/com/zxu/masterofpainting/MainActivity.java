@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.zxu.masterofpainting.bean.Tab;
-import com.zxu.masterofpainting.fragment.LookFragment;
-import com.zxu.masterofpainting.fragment.PhotoInfoFragment;
+import com.zxu.masterofpainting.fragment.CollectionFragment;
+import com.zxu.masterofpainting.fragment.MoreFragment;
 import com.zxu.masterofpainting.fragment.TakePhotoFragment;
-import com.zxu.masterofpainting.fragment.UserInfoFragment;
+import com.zxu.masterofpainting.fragment.MyFragment;
 import com.zxu.masterofpainting.widget.FragmentTabHost;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity{
 
     private void initTab() {
         Tab tab_takephoto = new Tab(TakePhotoFragment.class,R.string.takephoto,R.drawable.selector_icon_takephoto);
-        Tab tab_photoinfo = new Tab(PhotoInfoFragment.class,R.string.photoinfo,R.drawable.selector_icon_photoinfo);
-        Tab tab_look = new Tab(LookFragment.class,R.string.look,R.drawable.selector_icon_look);
-        Tab tab_user = new Tab(UserInfoFragment.class,R.string.user,R.drawable.selector_user_info);
+        Tab tab_photoinfo = new Tab(MoreFragment.class,R.string.photoinfo,R.drawable.selector_icon_photoinfo);
+        Tab tab_look = new Tab(CollectionFragment.class,R.string.look,R.drawable.selector_icon_look);
+        Tab tab_user = new Tab(MyFragment.class,R.string.user,R.drawable.selector_user_info);
 
         mTabs.add(tab_takephoto);
         mTabs.add(tab_photoinfo);

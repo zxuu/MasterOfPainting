@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -20,7 +19,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,15 +44,13 @@ public class TakePhotoFragment extends Fragment {
     private Bitmap bitmap;
     public static final int TAKE_PHOTO = 1;
     public static final int CHOSE_PHOTO = 2;
-    private ImageView picture;
-    private Button takepicture;
-    private Button chosephoto;
+    private ImageView picture_Distinguish;
     private Uri imageUri;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.take_photo_fragment,container,false);
+        View view = inflater.inflate(R.layout.fragment_takephoto,container,false);
         handler = new Handler();
 
 //        Bmob.initialize(getContext(),"76812c82e0ab48d59679f2590f429963");
@@ -85,19 +81,11 @@ public class TakePhotoFragment extends Fragment {
     }
 
     public void iniview(View view){
-        picture = (ImageView) view.findViewById(R.id.face_image_view);
-        takepicture = (Button) view.findViewById(R.id.take_photo);
-        chosephoto = (Button) view.findViewById(R.id.chose_from_album);
-        takepicture.setOnClickListener(new View.OnClickListener() {
+        picture_Distinguish = (ImageView) view.findViewById(R.id.things_image_view);
+        picture_Distinguish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takePhoto();
-            }
-        });
-        chosephoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chosePhoto();
             }
         });
     }
@@ -127,7 +115,7 @@ public class TakePhotoFragment extends Fragment {
                         //将拍摄的照片显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContext().getContentResolver()
                                 .openInputStream(imageUri));
-                        picture.setImageBitmap(bitmap);
+//                        picture.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -193,7 +181,7 @@ public class TakePhotoFragment extends Fragment {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, TAKE_PHOTO);
-//        startActivity(new Intent(getContext(),LookFragment.class));
+//        startActivity(new Intent(getContext(),CollectionFragment.class));
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -206,6 +194,7 @@ public class TakePhotoFragment extends Fragment {
 
     }
 
+    //供用户从手机中选择图片
     public void chosePhoto() {
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -234,7 +223,7 @@ public class TakePhotoFragment extends Fragment {
     private void displayImage(String imagePath) {
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            picture.setImageBitmap(bitmap);
+            //picture.setImageBitmap(bitmap);
         } else {
             Toast.makeText(getContext(), "failed to get image", Toast.LENGTH_SHORT).show();
         }
@@ -264,10 +253,4 @@ public class TakePhotoFragment extends Fragment {
         return bitmap;
     }
 
-    Runnable runnableUi = new Runnable() {
-        @Override
-        public void run() {
-            picture.setImageBitmap(bitmap);
-        }
-    };
 }
