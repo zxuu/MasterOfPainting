@@ -1,4 +1,4 @@
-package com.zxu.masterofpainting;
+package com.zxu.masterofpainting.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.zxu.masterofpainting.R;
 import com.zxu.masterofpainting.bean.Tab;
 import com.zxu.masterofpainting.fragment.CollectionFragment;
 import com.zxu.masterofpainting.fragment.MoreFragment;
@@ -17,6 +18,8 @@ import com.zxu.masterofpainting.fragment.MyFragment;
 import com.zxu.masterofpainting.widget.FragmentTabHost;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.Bmob;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -31,6 +34,11 @@ public class MainActivity extends AppCompatActivity{
 
         Fresco.initialize(this);
         initTab();
+        initBmob();
+    }
+
+    private void initBmob() {
+        Bmob.initialize(this,"ed9205b66f522e9595b175d66ab94690");
     }
 
     private void initTab() {

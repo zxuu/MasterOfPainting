@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/takephoto_bg">
+    android:background="@mipmap/takephoto_bg">
 
     <Button
     android:id="@+id/take_photo"
@@ -16,7 +16,8 @@
     android:text="chosefromalbum"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-        android:visibility="gone"/>
+    android:visibility="gone"/>
+
 
     <ImageView
         android:id="@+id/things_image_view"
@@ -24,7 +25,7 @@
         android:layout_height="170dp"
         android:layout_centerInParent="true"
         android:clickable="true"
-        android:src="@drawable/mybg2"
+        android:src="@drawable/btn_bg"
         android:focusable="true"/>
 
 </RelativeLayout>
