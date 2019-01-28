@@ -17,15 +17,15 @@ import java.util.List;
 /**
  * Created by zxu
  */
-public class MainFragment extends Fragment {
+public class ShowDetailFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     private List<String> mDatas;
     private static final String ARG_TITLE = "title";
     private String mTitle;
 
-    public static MainFragment getInstance(String title) {
-        MainFragment fra = new MainFragment();
+    public static ShowDetailFragment getInstance(String title) {
+        ShowDetailFragment fra = new ShowDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG_TITLE, title);
         fra.setArguments(bundle);

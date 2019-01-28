@@ -5,12 +5,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.zxu.masterofpainting.Adapter.MyPagerAdapter;
 import com.zxu.masterofpainting.R;
-import com.zxu.masterofpainting.fragment.MainFragment;
+import com.zxu.masterofpainting.fragment.EdibleEfficacyFragment;
+import com.zxu.masterofpainting.fragment.NutritionalComponentsFragment;
+import com.zxu.masterofpainting.fragment.ShowDetailFragment;
+import com.zxu.masterofpainting.fragment.SuitableAvoidFragment;
 
 import java.util.ArrayList;
 import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
@@ -19,15 +20,12 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     private CoordinatorTabLayout mCoordinatorTabLayout;
     private int[] mImageArray, mColorArray;
     private ArrayList<Fragment> mFragments;
-    private final String[] mTitles = {"Android", "iOS", "Web", "Other"};
+    private final String[] mTitles = {"营养成分", "食材功效", "食用宜忌"};
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_show_ingredients);
         initView();
         initFragments();
@@ -35,13 +33,11 @@ public class ShowIngredientsActivity extends AppCompatActivity {
         mImageArray = new int[]{
                 R.mipmap.bg_android,
                 R.mipmap.bg_ios,
-                R.mipmap.bg_js,
-                R.mipmap.bg_other};
+                R.mipmap.bg_js};
         mColorArray = new int[]{
                 android.R.color.holo_blue_light,
                 android.R.color.holo_red_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_green_light};
+                android.R.color.holo_orange_light};
 
         mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.coordinatortablayout);
         mCoordinatorTabLayout.setTranslucentStatusBar(this)
@@ -57,9 +53,17 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
     private void initFragments(){
         mFragments = new ArrayList<>();
-        for (String title : mTitles) {
-            mFragments.add(MainFragment.getInstance(title));
-        }
+        NutritionalComponentsFragment nutritionalComponentsFragment = new NutritionalComponentsFragment();
+        EdibleEfficacyFragment edibleEfficacyFragment = new EdibleEfficacyFragment();
+        SuitableAvoidFragment suitableAvoidFragment = new SuitableAvoidFragment();
+        mFragments.add(nutritionalComponentsFragment);
+        mFragments.add(edibleEfficacyFragment);
+        mFragments.add(suitableAvoidFragment);
+
+
+//        for (String title : mTitles) {
+//            mFragments.add(ShowDetailFragment.getInstance(title));
+//        }
     }
 
     private void initViewPager(){
