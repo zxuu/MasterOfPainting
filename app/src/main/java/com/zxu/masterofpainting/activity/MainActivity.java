@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.zxu.masterofpainting.R;
+import com.zxu.masterofpainting.bean.Ingredients;
 import com.zxu.masterofpainting.bean.Tab;
 import com.zxu.masterofpainting.fragment.CollectionFragment;
 import com.zxu.masterofpainting.fragment.MoreFragment;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -38,7 +42,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void initBmob() {
-        Bmob.initialize(this,"ed9205b66f522e9595b175d66ab94690");
+        Bmob.initialize(this,"865e1d41ba44fc9fa928add29b1ccbc0");
     }
 
     private void initTab() {

@@ -3,10 +3,10 @@ package com.zxu.masterofpainting.bean;
 import cn.bmob.v3.BmobObject;
 
 public class Ingredients extends BmobObject {
-    private String IngredientsName;
-    private String Nutrition;
-    private String Efficiency;
-    private String SuitableCollocation;
+    private String IngredientsName; //食材名字
+    private String Nutrition; // 营养成分
+    private String Efficiency; // 功效
+    private String SuitableCollocation; // 适宜搭配
 
     public String getIngredientsName() {
         return IngredientsName;

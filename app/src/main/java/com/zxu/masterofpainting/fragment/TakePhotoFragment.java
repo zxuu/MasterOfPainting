@@ -23,13 +23,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.zxu.masterofpainting.R;
+import com.zxu.masterofpainting.activity.ShowIngredientsActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -88,7 +86,8 @@ public class TakePhotoFragment extends Fragment {
         picture_Distinguish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takePhoto();
+                //takePhoto();
+                startActivity(new Intent(getContext(),ShowIngredientsActivity.class));
             }
         });
     }
