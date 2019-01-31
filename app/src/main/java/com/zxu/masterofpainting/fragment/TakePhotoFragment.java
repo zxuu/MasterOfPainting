@@ -54,28 +54,6 @@ public class TakePhotoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_takephoto,container,false);
         handler = new Handler();
 
-//        Bmob.initialize(getContext(),"76812c82e0ab48d59679f2590f429963");
-//        BmobQuery<test7> bmobQuery = new BmobQuery<>();
-//        bmobQuery.getObject("20c401fffc", new QueryListener<test7>() {
-//            @Override
-//            public void done(test7 test6, BmobException e) {
-//                byte[] photostr = test6.getImage();
-//                if (photostr != null) {
-////                    if (GenerateImage(photostr)){
-////                        Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
-////                    } else {
-////                        Toast.makeText(getContext(), "shibai", Toast.LENGTH_SHORT).show();
-////                    }
-//                    if (getPicFromBytes(photostr) != null) {
-//                        Toast.makeText(getContext(), "notnull", Toast.LENGTH_SHORT).show();
-//                        picture.setImageBitmap(getPicFromBytes(photostr));
-//                    }
-//                } else {
-//                    Toast.makeText(getContext(), "hpotoisnull", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
         iniview(view);
 
         return view;
