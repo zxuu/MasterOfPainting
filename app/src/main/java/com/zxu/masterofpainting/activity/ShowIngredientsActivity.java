@@ -10,7 +10,6 @@ import com.zxu.masterofpainting.Adapter.MyPagerAdapter;
 import com.zxu.masterofpainting.R;
 import com.zxu.masterofpainting.fragment.EdibleEfficacyFragment;
 import com.zxu.masterofpainting.fragment.NutritionalComponentsFragment;
-import com.zxu.masterofpainting.fragment.ShowDetailFragment;
 import com.zxu.masterofpainting.fragment.SuitableAvoidFragment;
 
 import java.util.ArrayList;
