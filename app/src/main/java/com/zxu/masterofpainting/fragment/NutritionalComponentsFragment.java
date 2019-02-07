@@ -48,8 +48,21 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
         }
         NutritionalAdapter nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.nutritional_item, ingredientsInformationList);
         ListView listView = (ListView) view.findViewById(R.id.chengfen_list);
+
+        int height = 0;
+        int count = nutritionalAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+            View temp = nutritionalAdapter.getView(i, null, listView);
+            temp.measure(0,0);
+            height += temp.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = height;
+        listView.setLayoutParams(params);
         listView.setAdapter(nutritionalAdapter);
     }
+
 
     private void initCircleView(View view) {
         mPieChart = (PieChart) view.findViewById(R.id.mPieChart);

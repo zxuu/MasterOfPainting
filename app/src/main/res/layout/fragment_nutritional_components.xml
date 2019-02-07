@@ -13,22 +13,13 @@
         android:layout_height="match_parent"
         >
 
-
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="370dp">
-
         <ListView
             android:id="@+id/chengfen_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </ListView>
-    </LinearLayout>
+
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/mPieChart"
@@ -37,10 +28,6 @@
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
             />
-
-
-
-
 
 
     </LinearLayout>
