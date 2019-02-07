@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    >
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,12 +14,34 @@
         >
 
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/mPieChart"
+
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"/>
+        android:layout_height="370dp">
+
+        <ListView
+            android:id="@+id/chengfen_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </LinearLayout>
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/mPieChart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            />
+
+
+
+
+
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

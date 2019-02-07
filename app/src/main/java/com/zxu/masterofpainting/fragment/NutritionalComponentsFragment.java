@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -20,23 +21,37 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.zxu.masterofpainting.Adapter.NutritionalAdapter;
 import com.zxu.masterofpainting.R;
+import com.zxu.masterofpainting.bean.IngredientsInformation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NutritionalComponentsFragment extends Fragment implements OnChartValueSelectedListener,View.OnClickListener {
     private PieChart mPieChart;
+    private List<IngredientsInformation> ingredientsInformationList = new ArrayList<>();
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nutritional_components, container, false);
-        initView(view);
+        initCircleView(view);
+        initTableView(view);
         return view;
     }
 
-    private void initView(View view) {
+    private void initTableView(View view) {
+        for (int i = 0; i < 20; i++) {
+            ingredientsInformationList.add(new IngredientsInformation("蛋白质", "100"));
+        }
+        NutritionalAdapter nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.nutritional_item, ingredientsInformationList);
+        ListView listView = (ListView) view.findViewById(R.id.chengfen_list);
+        listView.setAdapter(nutritionalAdapter);
+    }
+
+    private void initCircleView(View view) {
         mPieChart = (PieChart) view.findViewById(R.id.mPieChart);
         mPieChart.setUsePercentValues(true);
         mPieChart.getDescription().setEnabled(false);
