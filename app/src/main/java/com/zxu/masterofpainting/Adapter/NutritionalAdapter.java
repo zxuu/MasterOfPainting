@@ -17,14 +17,13 @@ import java.util.List;
 public class NutritionalAdapter extends ArrayAdapter<IngredientsInformation> {
     private int resourceId;
 
-    public NutritionalAdapter(@NonNull Context context, int resource, @NonNull List<IngredientsInformation> objects) {
+    public NutritionalAdapter(Context context, int resource, List<IngredientsInformation> objects) {
         super(context, resource, objects);
         resourceId = resource;
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         IngredientsInformation ingredientsInformation = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
         TextView compositionName = (TextView) view.findViewById(R.id.composition_name);

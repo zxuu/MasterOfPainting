@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -23,10 +24,15 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.zxu.masterofpainting.Adapter.NutritionalAdapter;
 import com.zxu.masterofpainting.R;
+import com.zxu.masterofpainting.bean.Ingredients;
 import com.zxu.masterofpainting.bean.IngredientsInformation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 public class NutritionalComponentsFragment extends Fragment implements OnChartValueSelectedListener,View.OnClickListener {
     private PieChart mPieChart;
@@ -43,9 +49,30 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
     }
 
     private void initTableView(View view) {
-        for (int i = 0; i < 20; i++) {
-            ingredientsInformationList.add(new IngredientsInformation("蛋白质", "100"));
-        }
+        BmobQuery<Ingredients> ingredientsBmobQuery = new BmobQuery<>("Ingredients");
+        ingredientsBmobQuery.addWhereEqualTo("IngredientsName", "香菇");
+        ingredientsBmobQuery.findObjects(new FindListener<Ingredients>() {
+            @Override
+            public void done(List<Ingredients> list, BmobException e) {
+                if (e == null) {
+                    for (Ingredients correctIngredients : list) {
+                        String resultNutrition = correctIngredients.getNutrition();
+                        //Toast.makeText(getContext(), resultNutrition, Toast.LENGTH_SHORT).show();
+                        String[] splitString = resultNutrition.split(";");
+                        for (int i = 0; i < splitString.length; i++) {
+                            String[] childsplit = splitString[i].split(",");
+                            //Toast.makeText(getContext(), childsplit[0]+childsplit[1], Toast.LENGTH_SHORT).show();
+                            ingredientsInformationList.add(new IngredientsInformation(childsplit[0],childsplit[1]));
+                        }
+                    }
+                } else {
+                    Toast.makeText(getContext(), "查询失败!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+//        for (int i = 0; i < 20; i++) {
+//            ingredientsInformationList.add(new IngredientsInformation("蛋白质", "100"));
+//        }
         NutritionalAdapter nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.nutritional_item, ingredientsInformationList);
         ListView listView = (ListView) view.findViewById(R.id.chengfen_list);
 
