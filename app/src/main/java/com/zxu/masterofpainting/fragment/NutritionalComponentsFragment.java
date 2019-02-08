@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +35,12 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
+import static android.content.ContentValues.TAG;
+
 public class NutritionalComponentsFragment extends Fragment implements OnChartValueSelectedListener,View.OnClickListener {
     private PieChart mPieChart;
     private List<IngredientsInformation> ingredientsInformationList = new ArrayList<>();
-
+    String resultNutrition;
 
     @Nullable
     @Override
@@ -49,29 +52,45 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
     }
 
     private void initTableView(View view) {
+
         BmobQuery<Ingredients> ingredientsBmobQuery = new BmobQuery<>("Ingredients");
-        ingredientsBmobQuery.addWhereEqualTo("IngredientsName", "香菇");
+        ingredientsBmobQuery.addWhereEqualTo("IngredientsName","香菇");
         ingredientsBmobQuery.findObjects(new FindListener<Ingredients>() {
             @Override
             public void done(List<Ingredients> list, BmobException e) {
                 if (e == null) {
                     for (Ingredients correctIngredients : list) {
-                        String resultNutrition = correctIngredients.getNutrition();
-                        //Toast.makeText(getContext(), resultNutrition, Toast.LENGTH_SHORT).show();
+                        resultNutrition = correctIngredients.getNutrition();
+                        Toast.makeText(getContext(), resultNutrition, Toast.LENGTH_SHORT).show();
                         String[] splitString = resultNutrition.split(";");
                         for (int i = 0; i < splitString.length; i++) {
-                            String[] childsplit = splitString[i].split(",");
+                            String childsplit1 = splitString[i].split(",")[0];
+                            String childsplit2 = splitString[i].split(",")[1];
                             //Toast.makeText(getContext(), childsplit[0]+childsplit[1], Toast.LENGTH_SHORT).show();
-                            ingredientsInformationList.add(new IngredientsInformation(childsplit[0],childsplit[1]));
+                            ingredientsInformationList.add(new IngredientsInformation(childsplit1,childsplit2));
                         }
+                        break;
                     }
                 } else {
-                    Toast.makeText(getContext(), "查询失败!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), e.getErrorCode(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "done: "+e.toString());
                 }
             }
         });
+        //Toast.makeText(getContext(), resultNutrition, Toast.LENGTH_SHORT).show();
+//        if (resultNutrition != null) {
+//            String[] splitString = resultNutrition.split(";");
+//            for (int i = 0; i < splitString.length; i++) {
+//                String[] childsplit = splitString[i].split(",");
+//                Toast.makeText(getContext(), childsplit[0]+childsplit[1], Toast.LENGTH_SHORT).show();
+//                ingredientsInformationList.add(new IngredientsInformation(childsplit[0],childsplit[1]));
+//            }
+//        } else {
+//            Toast.makeText(getContext(), "re is null", Toast.LENGTH_SHORT).show();
+//        }
+
 //        for (int i = 0; i < 20; i++) {
-//            ingredientsInformationList.add(new IngredientsInformation("蛋白质", "100"));
+//            ingredientsInformationList.add(new IngredientsInformation("热量(大卡)", "10"));
 //        }
         NutritionalAdapter nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.nutritional_item, ingredientsInformationList);
         ListView listView = (ListView) view.findViewById(R.id.chengfen_list);
