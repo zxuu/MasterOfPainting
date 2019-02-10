@@ -15,6 +15,6 @@
         android:id="@+id/composition_jiliang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"/>
+        android:layout_gravity="bottom"/>
 
 </LinearLayout>

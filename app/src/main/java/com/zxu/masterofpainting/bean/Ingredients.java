@@ -39,6 +39,4 @@ public class Ingredients extends BmobObject {
     public void setSuitableCollocation(String suitableCollocation) {
         SuitableCollocation = suitableCollocation;
     }
-
-
 }

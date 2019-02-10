@@ -2,6 +2,7 @@ package com.zxu.masterofpainting.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
@@ -38,63 +39,66 @@ import cn.bmob.v3.listener.FindListener;
 import static android.content.ContentValues.TAG;
 
 public class NutritionalComponentsFragment extends Fragment implements OnChartValueSelectedListener,View.OnClickListener {
+    private ListView listView;
     private PieChart mPieChart;
+    private Handler handler;
     private List<IngredientsInformation> ingredientsInformationList = new ArrayList<>();
-    String resultNutrition;
+    private NutritionalAdapter nutritionalAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nutritional_components, container, false);
+        initView(view);
+        getData();
+        initTableView();
         initCircleView(view);
-        initTableView(view);
         return view;
     }
 
-    private void initTableView(View view) {
-
+    private void initView(View view) {
+        handler = new Handler();
+        listView = (ListView) view.findViewById(R.id.chengfen_list);
+        nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.nutritional_item, ingredientsInformationList);
+    }
+    private void getData() {
         BmobQuery<Ingredients> ingredientsBmobQuery = new BmobQuery<>("Ingredients");
         ingredientsBmobQuery.addWhereEqualTo("IngredientsName","香菇");
         ingredientsBmobQuery.findObjects(new FindListener<Ingredients>() {
             @Override
             public void done(List<Ingredients> list, BmobException e) {
-                if (e == null) {
-                    for (Ingredients correctIngredients : list) {
-                        resultNutrition = correctIngredients.getNutrition();
-                        Toast.makeText(getContext(), resultNutrition, Toast.LENGTH_SHORT).show();
-                        String[] splitString = resultNutrition.split(";");
-                        for (int i = 0; i < splitString.length; i++) {
-                            String childsplit1 = splitString[i].split(",")[0];
-                            String childsplit2 = splitString[i].split(",")[1];
-                            //Toast.makeText(getContext(), childsplit[0]+childsplit[1], Toast.LENGTH_SHORT).show();
-                            ingredientsInformationList.add(new IngredientsInformation(childsplit1,childsplit2));
+                if (list != null) {
+                    for (int i = 0; i < list.size(); i++) {
+                        Ingredients correctIngredients = list.get(i);
+                        if (correctIngredients.getIngredientsName().equals("香菇")) {
+                            Toast.makeText(getContext(), "香菇", Toast.LENGTH_SHORT).show();
+                            String resultNutrition = correctIngredients.getNutrition();
+                            if (resultNutrition != null) {
+                                String[] splitString = resultNutrition.split(";");
+                                for (int j = 0; j < splitString.length; j++) {
+                                    String[] childsplit = splitString[j].split(",");
+                                    ingredientsInformationList.add(new IngredientsInformation(childsplit[0], childsplit[1]));
+                                }
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initTableView();
+                                    }
+                                });
+                                return;
+                            } else {
+                                Toast.makeText(getContext(), "re is null", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        break;
                     }
                 } else {
-                    Toast.makeText(getContext(), e.getErrorCode(), Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "done: "+e.toString());
+                    Toast.makeText(getContext(), "list is null", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        //Toast.makeText(getContext(), resultNutrition, Toast.LENGTH_SHORT).show();
-//        if (resultNutrition != null) {
-//            String[] splitString = resultNutrition.split(";");
-//            for (int i = 0; i < splitString.length; i++) {
-//                String[] childsplit = splitString[i].split(",");
-//                Toast.makeText(getContext(), childsplit[0]+childsplit[1], Toast.LENGTH_SHORT).show();
-//                ingredientsInformationList.add(new IngredientsInformation(childsplit[0],childsplit[1]));
-//            }
-//        } else {
-//            Toast.makeText(getContext(), "re is null", Toast.LENGTH_SHORT).show();
-//        }
+    }
 
-//        for (int i = 0; i < 20; i++) {
-//            ingredientsInformationList.add(new IngredientsInformation("热量(大卡)", "10"));
-//        }
-        NutritionalAdapter nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.nutritional_item, ingredientsInformationList);
-        ListView listView = (ListView) view.findViewById(R.id.chengfen_list);
-
+    private void initTableView() {
         int height = 0;
         int count = nutritionalAdapter.getCount();
         for (int i = 0; i < count; i++) {
