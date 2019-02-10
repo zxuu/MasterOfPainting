@@ -8,4 +8,6 @@
     <color name="white">#ffffff</color>
     <color name="takephoto_bg_centercolor">#fa8666</color>
     <color name="takephoto_bg_endcolor">#e6cec7</color>
+
+    <color name="colorBackGround">#fff</color>
 </resources>
