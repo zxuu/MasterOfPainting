@@ -24,9 +24,7 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/mPieChart"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
+            android:layout_height="450dp"
             android:background="@color/colorBackGround"/>
 
 

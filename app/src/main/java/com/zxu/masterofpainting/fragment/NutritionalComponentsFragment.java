@@ -1,5 +1,7 @@
 package com.zxu.masterofpainting.fragment;
 
+
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,54 +37,68 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import dmax.dialog.SpotsDialog;
 
 import static android.content.ContentValues.TAG;
 
 public class NutritionalComponentsFragment extends Fragment implements OnChartValueSelectedListener,View.OnClickListener {
+    String ingredientsName;
     private ListView listView;
     private PieChart mPieChart;
     private Handler handler;
     private List<IngredientsInformation> ingredientsInformationList = new ArrayList<>();
+    //模拟数据
+    ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
     private NutritionalAdapter nutritionalAdapter;
+    //加载
+    private SpotsDialog dialog;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nutritional_components, container, false);
+        dialog = new SpotsDialog(getActivity(),"loading....");
+        dialog.show();
         initView(view);
-        getData();
-        initTableView();
-        initCircleView(view);
+        //setCircleData();
+        getAllData();
+        setCircleData();
+        //dialog.dismiss();
         return view;
     }
 
     private void initView(View view) {
+        //dialog.show();
         handler = new Handler();
         listView = (ListView) view.findViewById(R.id.chengfen_list);
+        mPieChart = (PieChart) view.findViewById(R.id.mPieChart);
         nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.nutritional_item, ingredientsInformationList);
     }
-    private void getData() {
+    private void getAllData() {
+        ingredientsName = "香菇";
         BmobQuery<Ingredients> ingredientsBmobQuery = new BmobQuery<>("Ingredients");
-        ingredientsBmobQuery.addWhereEqualTo("IngredientsName","香菇");
+        ingredientsBmobQuery.addWhereEqualTo("IngredientsName",ingredientsName);
         ingredientsBmobQuery.findObjects(new FindListener<Ingredients>() {
             @Override
             public void done(List<Ingredients> list, BmobException e) {
                 if (list != null) {
                     for (int i = 0; i < list.size(); i++) {
                         Ingredients correctIngredients = list.get(i);
-                        if (correctIngredients.getIngredientsName().equals("香菇")) {
-                            Toast.makeText(getContext(), "香菇", Toast.LENGTH_SHORT).show();
+                        if (correctIngredients.getIngredientsName().equals(ingredientsName)) {
+                            Toast.makeText(getContext(), ingredientsName, Toast.LENGTH_SHORT).show();
                             String resultNutrition = correctIngredients.getNutrition();
                             if (resultNutrition != null) {
                                 String[] splitString = resultNutrition.split(";");
                                 for (int j = 0; j < splitString.length; j++) {
                                     String[] childsplit = splitString[j].split(",");
                                     ingredientsInformationList.add(new IngredientsInformation(childsplit[0], childsplit[1]));
+                                    entries.add(new PieEntry(Float.parseFloat(childsplit[1]), childsplit[0]));
                                 }
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {
                                         initTableView();
+                                        initCircleView();
                                     }
                                 });
                                 return;
@@ -98,32 +114,14 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
         });
     }
 
-    private void initTableView() {
-        int height = 0;
-        int count = nutritionalAdapter.getCount();
-        for (int i = 0; i < count; i++) {
-            View temp = nutritionalAdapter.getView(i, null, listView);
-            temp.measure(0,0);
-            height += temp.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = height;
-        listView.setLayoutParams(params);
-        listView.setAdapter(nutritionalAdapter);
-    }
 
-
-    private void initCircleView(View view) {
-        mPieChart = (PieChart) view.findViewById(R.id.mPieChart);
+    private void setCircleData() {
         mPieChart.setUsePercentValues(true);
         mPieChart.getDescription().setEnabled(false);
         mPieChart.setExtraOffsets(5, 10, 5, 5);
-
         mPieChart.setDragDecelerationFrictionCoef(0.95f);
         //设置中间文件
         mPieChart.setCenterText(generateCenterSpannableText());
-
         mPieChart.setDrawHoleEnabled(true);
         mPieChart.setHoleColor(Color.WHITE);
 
@@ -143,15 +141,6 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
         //变化监听
         mPieChart.setOnChartValueSelectedListener(this);
 
-        //模拟数据
-        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-        entries.add(new PieEntry(40, "优秀"));
-        entries.add(new PieEntry(20, "满分"));
-        entries.add(new PieEntry(30, "及格"));
-        entries.add(new PieEntry(10, "不及格"));
-
-        //设置数据
-        setData(entries);
 
         mPieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
 
@@ -167,6 +156,25 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
         // 输入标签样式
         mPieChart.setEntryLabelColor(Color.WHITE);
         mPieChart.setEntryLabelTextSize(12f);
+    }
+    private void initTableView() {
+        int height = 0;
+        int count = nutritionalAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+            View temp = nutritionalAdapter.getView(i, null, listView);
+            temp.measure(0,0);
+            height += temp.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = height;
+        listView.setLayoutParams(params);
+        listView.setAdapter(nutritionalAdapter);
+    }
+
+
+    private void initCircleView() {
+        setData(entries);
     }
 
     @Override
@@ -187,7 +195,7 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
     //设置中间文字
     private SpannableString generateCenterSpannableText() {
         //原文：MPAndroidChart\ndeveloped by Philipp Jahoda
-        SpannableString s = new SpannableString("赵某人程序员\n今天有点冷");
+        SpannableString s = new SpannableString(ingredientsName);
         //s.setSpan(new RelativeSizeSpan(1.7f), 0, 14, 0);
         //s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
         // s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
@@ -199,7 +207,7 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
 
     //设置数据
     private void setData(ArrayList<PieEntry> entries) {
-        PieDataSet dataSet = new PieDataSet(entries, "三年级二班");
+        PieDataSet dataSet = new PieDataSet(entries, ingredientsName);
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 

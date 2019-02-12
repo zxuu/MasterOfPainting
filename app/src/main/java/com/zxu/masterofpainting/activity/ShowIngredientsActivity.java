@@ -14,6 +14,7 @@ import com.zxu.masterofpainting.fragment.SuitableAvoidFragment;
 
 import java.util.ArrayList;
 import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
+import dmax.dialog.SpotsDialog;
 
 public class ShowIngredientsActivity extends AppCompatActivity {
     private CoordinatorTabLayout mCoordinatorTabLayout;
@@ -21,12 +22,14 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     private ArrayList<Fragment> mFragments;
     private final String[] mTitles = {"营养成分", "食材功效", "食用宜忌"};
     private ViewPager mViewPager;
+    //private SpotsDialog spotsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_ingredients);
         initView();
+        //spotsDialog.show();
         initFragments();
         initViewPager();
         mImageArray = new int[]{
@@ -44,6 +47,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                 .setBackEnable(true)
                 .setImageArray(mImageArray, mColorArray)
                 .setupWithViewPager(mViewPager);
+
     }
 
     private void initView() {
