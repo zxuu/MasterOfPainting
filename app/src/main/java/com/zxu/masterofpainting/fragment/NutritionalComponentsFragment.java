@@ -57,18 +57,15 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nutritional_components, container, false);
-        dialog = new SpotsDialog(getActivity(),"loading....");
-        dialog.show();
         initView(view);
-        //setCircleData();
         getAllData();
         setCircleData();
-        //dialog.dismiss();
         return view;
     }
 
     private void initView(View view) {
-        //dialog.show();
+        dialog = new SpotsDialog(getActivity(),"loading....");
+        dialog.show();
         handler = new Handler();
         listView = (ListView) view.findViewById(R.id.chengfen_list);
         mPieChart = (PieChart) view.findViewById(R.id.mPieChart);
@@ -101,6 +98,7 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
                                         initCircleView();
                                     }
                                 });
+                                dialog.dismiss();
                                 return;
                             } else {
                                 Toast.makeText(getContext(), "re is null", Toast.LENGTH_SHORT).show();
