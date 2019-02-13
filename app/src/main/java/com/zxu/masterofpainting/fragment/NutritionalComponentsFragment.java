@@ -184,7 +184,7 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
 
     //设置数据
     private void setData(ArrayList<PieEntry> entries) {
-        PieDataSet dataSet = new PieDataSet(entries, Contants.ingredientsName);
+        PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 

@@ -32,6 +32,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private BmobQuery<Ingredients> ingredientsBmobQuery;
     private String ingredientsName;
+    private SpotsDialog spotsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,35 +40,20 @@ public class ShowIngredientsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_ingredients);
         initView();
         getIngredientsData();
-        //initFragments();
-        //initViewPager();
-        mImageArray = new int[]{
-                R.mipmap.bg_android,
-                R.mipmap.bg_ios,
-                R.mipmap.bg_js};
-        mColorArray = new int[]{
-                android.R.color.holo_blue_light,
-                android.R.color.holo_red_light,
-                android.R.color.holo_orange_light};
-
-        mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.coordinatortablayout);
-        mCoordinatorTabLayout.setTranslucentStatusBar(this)
-                .setTitle("食材详情")
-                .setBackEnable(true)
-                .setImageArray(mImageArray, mColorArray)
-                .setupWithViewPager(mViewPager);
-
+        setCoordinatorTabLayoutData();
     }
 
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.vp);
         mViewPager.setOffscreenPageLimit(4);
+        spotsDialog = new SpotsDialog(this,"拼命加载中...");
+        spotsDialog.show();
     }
 
     private void getIngredientsData(){
         ingredientsName = "香菇";
+        Toast.makeText(this, ingredientsName, Toast.LENGTH_SHORT).show();
         Contants.ingredientsName = ingredientsName;
-        mFragments = new ArrayList<>();
         ingredientsBmobQuery = new BmobQuery<>("Ingredients");
         ingredientsBmobQuery.addWhereEqualTo("IngredientsName", ingredientsName);
         ingredientsBmobQuery.findObjects(new FindListener<Ingredients>() {
@@ -80,23 +66,9 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                             Contants.ingredientsNutrution= correctIngredients.getNutrition();
                             Contants.ingredientsEfficiency = correctIngredients.getEfficiency();
                             Contants.ingredientsSuitableCollocation = correctIngredients.getSuitableCollocation();
-//                            NutritionalComponentsFragment nutritionalComponentsFragment = new NutritionalComponentsFragment();
-//                            Bundle bundle1 = new Bundle();
-//                            bundle1.putString("ingredientsNutrution",correctIngredients.getNutrition());
-//                            nutritionalComponentsFragment.setArguments(bundle1);
-//                            EdibleEfficacyFragment edibleEfficacyFragment = new EdibleEfficacyFragment();
-//                            Bundle bundle2 = new Bundle();
-//                            bundle1.putString("ingredientsEfficiency",correctIngredients.getEfficiency());
-//                            edibleEfficacyFragment.setArguments(bundle2);
-//                            SuitableAvoidFragment suitableAvoidFragment = new SuitableAvoidFragment();
-//                            Bundle bundle3 = new Bundle();
-//                            bundle1.putString("ingredientsSuitableCollocation",correctIngredients.getSuitableCollocation());
-//                            suitableAvoidFragment.setArguments(bundle3);
-//                            mFragments.add(nutritionalComponentsFragment);
-//                            mFragments.add(edibleEfficacyFragment);
-//                            mFragments.add(suitableAvoidFragment);
                             initFragments();
                             initViewPager();
+                            spotsDialog.dismiss();
                             break;
                         }
                     }
@@ -107,6 +79,24 @@ public class ShowIngredientsActivity extends AppCompatActivity {
         });
     }
 
+    private void setCoordinatorTabLayoutData(){
+        mImageArray = new int[]{
+                R.mipmap.bg_pic11,
+                R.mipmap.bg_ios,
+                R.mipmap.bg_js};
+        mColorArray = new int[]{
+                android.R.color.holo_blue_light,
+                android.R.color.holo_red_light,
+                android.R.color.holo_orange_light};
+
+        mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.coordinatortablayout);
+        mCoordinatorTabLayout.setTranslucentStatusBar(this)
+                .setTitle("                  "+ingredientsName)
+                .setBackEnable(true)
+                .setImageArray(mImageArray, mColorArray)
+                .setupWithViewPager(mViewPager);
+    }
+
     private void initFragments(){
         mFragments = new ArrayList<>();
         NutritionalComponentsFragment nutritionalComponentsFragment = new NutritionalComponentsFragment();
@@ -115,7 +105,6 @@ public class ShowIngredientsActivity extends AppCompatActivity {
         mFragments.add(nutritionalComponentsFragment);
         mFragments.add(edibleEfficacyFragment);
         mFragments.add(suitableAvoidFragment);
-
 
 //        for (String title : mTitles) {
 //            mFragments.add(ShowDetailFragment.getInstance(title));
