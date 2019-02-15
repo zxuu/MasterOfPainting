@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.zxu.masterofpainting.Adapter.MyPagerAdapter;
-import com.zxu.masterofpainting.Contants;
+import com.zxu.masterofpainting.Constants;
 import com.zxu.masterofpainting.R;
 import com.zxu.masterofpainting.bean.Ingredients;
 import com.zxu.masterofpainting.fragment.EdibleEfficacyFragment;
@@ -39,6 +39,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_ingredients);
+
         initView();
         getIngredientsData();
         setCoordinatorTabLayoutData();
@@ -54,7 +55,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     private void getIngredientsData(){
         ingredientsName = "香菇";
         Toast.makeText(this, ingredientsName, Toast.LENGTH_SHORT).show();
-        Contants.ingredientsName = ingredientsName;
+        Constants.ingredientsName = ingredientsName;
         ingredientsBmobQuery = new BmobQuery<>("Ingredients");
         ingredientsBmobQuery.addWhereEqualTo("IngredientsName", ingredientsName);
         ingredientsBmobQuery.findObjects(new FindListener<Ingredients>() {
@@ -64,9 +65,9 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                     for (int i = 0; i < list.size(); i++) {
                         Ingredients correctIngredients = list.get(i);
                         if (correctIngredients.getIngredientsName().equals(ingredientsName)) {
-                            Contants.ingredientsNutrution= correctIngredients.getNutrition();
-                            Contants.ingredientsEfficiency = correctIngredients.getEfficiency();
-                            Contants.ingredientsSuitableCollocation = correctIngredients.getSuitableCollocation();
+                            Constants.ingredientsNutrution= correctIngredients.getNutrition();
+                            Constants.ingredientsEfficiency = correctIngredients.getEfficiency();
+                            Constants.ingredientsSuitableCollocation = correctIngredients.getSuitableCollocation();
                             initFragments();
                             initViewPager();
                             spotsDialog.dismiss();
@@ -82,9 +83,9 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
     private void setCoordinatorTabLayoutData(){
         mImageArray = new int[]{
-                R.mipmap.bg_pic11,
-                R.mipmap.bg_ios,
-                R.mipmap.bg_js};
+                R.mipmap.xianggu,
+                R.mipmap.xianggu,
+                R.mipmap.xianggu};
         mColorArray = new int[]{
                 android.R.color.holo_blue_light,
                 android.R.color.holo_orange_dark,

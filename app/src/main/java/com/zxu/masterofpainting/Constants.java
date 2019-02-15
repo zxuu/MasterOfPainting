@@ -1,6 +1,6 @@
 package com.zxu.masterofpainting;
 
-public class Contants {
+public class Constants {
 
     public static String ingredientsName;
     public static String ingredientsNutrution;

@@ -21,7 +21,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.zxu.masterofpainting.Adapter.NutritionalAdapter;
-import com.zxu.masterofpainting.Contants;
+import com.zxu.masterofpainting.Constants;
 import com.zxu.masterofpainting.R;
 import com.zxu.masterofpainting.bean.NutritionItem;
 
@@ -55,7 +55,7 @@ public class NutritionalComponentsFragment extends Fragment{
     }
 
     private void getAllData() {
-        resultNutrition = Contants.ingredientsNutrution;
+        resultNutrition = Constants.ingredientsNutrution;
         if (resultNutrition != null) {
             String[] splitString = resultNutrition.split(";");
             for (int j = 0; j < splitString.length; j++) {

@@ -1,20 +1,15 @@
 package com.zxu.masterofpainting.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.zxu.masterofpainting.Adapter.EfficacyAdapter;
-import com.zxu.masterofpainting.Contants;
+import com.zxu.masterofpainting.Constants;
 import com.zxu.masterofpainting.R;
 import com.zxu.masterofpainting.bean.EfficacyItem;
 
@@ -40,8 +35,8 @@ public class EdibleEfficacyFragment extends Fragment {
     }
 
     private void getData() {
-        if (Contants.ingredientsEfficiency != null) {
-            edibleEfficacyStr = Contants.ingredientsEfficiency;
+        if (Constants.ingredientsEfficiency != null) {
+            edibleEfficacyStr = Constants.ingredientsEfficiency;
             String[] splitstring = edibleEfficacyStr.split("#");
             for (int i = 0; i < splitstring.length / 2; i++) {
                 efficacyItemList.add(new EfficacyItem(splitstring[i*2], splitstring[i*2 + 1]));
