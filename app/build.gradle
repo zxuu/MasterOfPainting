@@ -46,4 +46,5 @@ dependencies {
     implementation 'com.github.huangyanbin:SmartTable:2.2.0'
     //网络加载
     implementation 'com.github.d-max:spots-dialog:0.7@aar'
+    implementation 'com.android.support:recyclerview-v7:27.0.0'
 }

@@ -28,9 +28,10 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     private CoordinatorTabLayout mCoordinatorTabLayout;
     private int[] mImageArray, mColorArray;
     private ArrayList<Fragment> mFragments;
-    private final String[] mTitles = {"营养成分", "食材功效", "食用宜忌"};
+    private final String[] mTitles = {"营养成分", "食材功效", "搭配宜忌"};
     private ViewPager mViewPager;
     private BmobQuery<Ingredients> ingredientsBmobQuery;
+    //食材名称
     private String ingredientsName;
     private SpotsDialog spotsDialog;
 
@@ -86,7 +87,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                 R.mipmap.bg_js};
         mColorArray = new int[]{
                 android.R.color.holo_blue_light,
-                android.R.color.holo_red_light,
+                android.R.color.holo_orange_dark,
                 android.R.color.holo_orange_light};
 
         mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.coordinatortablayout);

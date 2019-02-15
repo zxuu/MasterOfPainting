@@ -1,11 +1,11 @@
 package com.zxu.masterofpainting.bean;
 
 
-public class IngredientsInformation {
+public class NutritionItem {
     private String compositioNname; //成分名字
     private String compositionZongliang; //成分总量
 
-    public IngredientsInformation(String compositioNname, String compositionZongliang) {
+    public NutritionItem(String compositioNname, String compositionZongliang) {
         this.compositioNname = compositioNname;
         this.compositionZongliang = compositionZongliang;
     }

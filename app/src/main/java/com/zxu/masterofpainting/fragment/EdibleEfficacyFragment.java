@@ -1,48 +1,62 @@
 package com.zxu.masterofpainting.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.zxu.masterofpainting.Adapter.EfficacyAdapter;
 import com.zxu.masterofpainting.Contants;
 import com.zxu.masterofpainting.R;
+import com.zxu.masterofpainting.bean.EfficacyItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EdibleEfficacyFragment extends Fragment {
-    private TextView edibleEffiTextView;
     private String edibleEfficacyStr;
-    private String[] edibleEfficacyStrSplit;
+    private RecyclerView efficacyrecyclerview;
+    private EfficacyAdapter efficacyAdapter;
+    private List<EfficacyItem> efficacyItemList = new ArrayList<>();
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edible_efficacy, container, false);
         initView(view);
         getData();
-        setEdibleEfficacyStrData();
         return view;
     }
 
     private void initView(View view) {
-        edibleEffiTextView = (TextView) view.findViewById(R.id.edible_efficacy_text_view);
+        efficacyrecyclerview = (RecyclerView) view.findViewById(R.id.efficacy_recycler_view);
     }
 
     private void getData() {
         if (Contants.ingredientsEfficiency != null) {
             edibleEfficacyStr = Contants.ingredientsEfficiency;
+            String[] splitstring = edibleEfficacyStr.split("#");
+            for (int i = 0; i < splitstring.length / 2; i++) {
+                efficacyItemList.add(new EfficacyItem(splitstring[i*2], splitstring[i*2 + 1]));
+            }
+            setEfficacyListView();
         } else {
 
         }
     }
 
-    private void setEdibleEfficacyStrData() {
-        edibleEffiTextView.setText(edibleEfficacyStr);
-        edibleEfficacyStrSplit = edibleEfficacyStr.split("#");
-        Toast.makeText(getContext(), edibleEfficacyStrSplit.length + "", Toast.LENGTH_SHORT).show();
+    private void setEfficacyListView() {
+        StaggeredGridLayoutManager layoutManager = new
+                StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        efficacyrecyclerview.setLayoutManager(layoutManager);
+        EfficacyAdapter efficacyAdapter = new EfficacyAdapter(efficacyItemList);
+        efficacyrecyclerview.setAdapter(efficacyAdapter);
     }
 }

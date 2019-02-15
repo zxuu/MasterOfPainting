@@ -1,14 +1,11 @@
 package com.zxu.masterofpainting.fragment;
 
 
-import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,41 +15,28 @@ import android.widget.Toast;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.zxu.masterofpainting.Adapter.NutritionalAdapter;
 import com.zxu.masterofpainting.Contants;
 import com.zxu.masterofpainting.R;
-import com.zxu.masterofpainting.bean.Ingredients;
-import com.zxu.masterofpainting.bean.IngredientsInformation;
+import com.zxu.masterofpainting.bean.NutritionItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import dmax.dialog.SpotsDialog;
-
-import static android.content.ContentValues.TAG;
-
-public class NutritionalComponentsFragment extends Fragment implements OnChartValueSelectedListener,View.OnClickListener {
+public class NutritionalComponentsFragment extends Fragment{
     private ListView listView;
     private PieChart mPieChart;
-    private Handler handler;
-    private List<IngredientsInformation> ingredientsInformationList = new ArrayList<>();
+    private List<NutritionItem> ingredientsInformationList = new ArrayList<>();
     //数据
     ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
     private NutritionalAdapter nutritionalAdapter;
+    //营养成分
     private String resultNutrition;
-
-
 
     @Nullable
     @Override
@@ -65,32 +49,26 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
     }
 
     private void initView(View view) {
-        handler = new Handler();
         listView = (ListView) view.findViewById(R.id.chengfen_list);
         mPieChart = (PieChart) view.findViewById(R.id.mPieChart);
         nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.nutritional_item, ingredientsInformationList);
     }
+
     private void getAllData() {
         resultNutrition = Contants.ingredientsNutrution;
         if (resultNutrition != null) {
             String[] splitString = resultNutrition.split(";");
             for (int j = 0; j < splitString.length; j++) {
                 String[] childsplit = splitString[j].split(",");
-                ingredientsInformationList.add(new IngredientsInformation(childsplit[0], childsplit[1]));
+                ingredientsInformationList.add(new NutritionItem(childsplit[0], childsplit[1]));
                 entries.add(new PieEntry(Float.parseFloat(childsplit[1]), childsplit[0]));
             }
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    initTableView();
-                    initCircleView();
-                }
-            });
+            initTableView();
+            initCircleView();
         } else {
             Toast.makeText(getContext(), "re is null", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private void setCircleData() {
         mPieChart.setUsePercentValues(true);
@@ -116,8 +94,7 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
         mPieChart.setHighlightPerTapEnabled(true);
 
         //变化监听
-        mPieChart.setOnChartValueSelectedListener(this);
-
+        //mPieChart.setOnChartValueSelectedListener(this);
 
         mPieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
 
@@ -134,6 +111,7 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
         mPieChart.setEntryLabelColor(Color.WHITE);
         mPieChart.setEntryLabelTextSize(12f);
     }
+
     private void initTableView() {
         int height = 0;
         int count = nutritionalAdapter.getCount();
@@ -149,25 +127,10 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
         listView.setAdapter(nutritionalAdapter);
     }
 
-
     private void initCircleView() {
         setData(entries);
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onValueSelected(Entry e, Highlight h) {
-
-    }
-
-    @Override
-    public void onNothingSelected() {
-
-    }
 
     //设置中间文字
     private SpannableString generateCenterSpannableText() {
@@ -187,7 +150,6 @@ public class NutritionalComponentsFragment extends Fragment implements OnChartVa
         PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
-
         //数据和颜色
         ArrayList<Integer> colors = new ArrayList<Integer>();
         for (int c : ColorTemplate.VORDIPLOM_COLORS)

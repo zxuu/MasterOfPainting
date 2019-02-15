@@ -1,13 +1,13 @@
 package com.zxu.masterofpainting.utils;
 
-import com.zxu.masterofpainting.bean.IngredientsInformation;
+import com.zxu.masterofpainting.bean.NutritionItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NutritionUtil {
-    public static List<IngredientsInformation> nutritionStringUtil(String nutritionString) {
-        List<IngredientsInformation> ingredientsInformationList = new ArrayList<>();
+    public static List<NutritionItem> nutritionStringUtil(String nutritionString) {
+        List<NutritionItem> ingredientsInformationList = new ArrayList<>();
         String[] str = nutritionString.split(";");
         
         return ingredientsInformationList;
