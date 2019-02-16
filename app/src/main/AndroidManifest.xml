@@ -47,8 +47,13 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".activity.ShowIngredientsActivity"
+        <activity
+            android:name=".activity.ShowIngredientsActivity"
             android:theme="@style/ShowIngredientsActivityTheme">
+
+        </activity>
+        <activity android:name=".activity.CollocationActivity"
+            android:theme="@style/CollocationActivityTheme">
 
         </activity>
     </application>

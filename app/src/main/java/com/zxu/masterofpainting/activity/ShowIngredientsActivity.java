@@ -53,7 +53,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     }
 
     private void getIngredientsData(){
-        ingredientsName = "香菇";
+        ingredientsName = "银耳";
         Toast.makeText(this, ingredientsName, Toast.LENGTH_SHORT).show();
         Constants.ingredientsName = ingredientsName;
         ingredientsBmobQuery = new BmobQuery<>("Ingredients");
@@ -83,9 +83,9 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
     private void setCoordinatorTabLayoutData(){
         mImageArray = new int[]{
-                R.mipmap.xianggu,
-                R.mipmap.xianggu,
-                R.mipmap.xianggu};
+                R.mipmap.yiner,
+                R.mipmap.yiner,
+                R.mipmap.yiner};
         mColorArray = new int[]{
                 android.R.color.holo_blue_light,
                 android.R.color.holo_orange_dark,
