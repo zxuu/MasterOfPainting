@@ -6,15 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zxu.masterofpainting.Constants;
 import com.zxu.masterofpainting.R;
 import com.zxu.masterofpainting.activity.CollocationActivity;
+import com.zxu.masterofpainting.activity.CollocationDetailActivity;
+import com.zxu.masterofpainting.activity.TestActivity;
 import com.zxu.masterofpainting.bean.SuitableAvoidItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SuitableAvoidAdapter extends RecyclerView.Adapter<SuitableAvoidAdapter.ViewHolder> {
@@ -45,6 +45,8 @@ public class SuitableAvoidAdapter extends RecyclerView.Adapter<SuitableAvoidAdap
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
                 SuitableAvoidItem suitableAvoidItem = mSuitableAvoidItemList.get(position);
+                Intent intent = new Intent(v.getContext(),TestActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
         return viewHolder;

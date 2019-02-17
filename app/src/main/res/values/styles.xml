@@ -15,8 +15,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="CollocationActivityTheme" parent="ShowIngredientsActivityTheme" >
+    <style name="CollocationDetailActivityTheme" parent="ShowIngredientsActivityTheme" >
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <style name="CollocationActivityTheme" parent="ShowIngredientsActivityTheme"></style>
 
 </resources>

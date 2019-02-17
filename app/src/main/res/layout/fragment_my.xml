@@ -5,10 +5,39 @@
     android:layout_height="match_parent"
     tools:context=".fragment.MyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorBackGround">
+
+            <ImageView
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_collection"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:text="我的收藏"
+                android:textSize="18dp"
+                android:gravity="center_vertical"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/collection_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </FrameLayout>

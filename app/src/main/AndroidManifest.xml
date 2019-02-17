@@ -49,12 +49,13 @@
 
         <activity
             android:name=".activity.ShowIngredientsActivity"
-            android:theme="@style/ShowIngredientsActivityTheme">
-
-        </activity>
+            android:theme="@style/ShowIngredientsActivityTheme" />
+        <activity
+            android:name=".activity.CollocationDetailActivity"
+            android:theme="@style/CollocationDetailActivityTheme" />
+        <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.CollocationActivity"
             android:theme="@style/CollocationActivityTheme">
-
         </activity>
     </application>
 
