@@ -15,17 +15,17 @@ import com.zxu.masterofpainting.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CollectionFragment extends Fragment {
+public class NurseFragment extends Fragment {
     public Button button;
     public ImageView imageView;
 
-    public CollectionFragment() {
+    public NurseFragment() {
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_collection,container,false);
+        View view = inflater.inflate(R.layout.fragment_life,container,false);
         initView(view);
         return view;
     }

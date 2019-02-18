@@ -8,22 +8,15 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.zxu.masterofpainting.R;
-import com.zxu.masterofpainting.bean.Ingredients;
 import com.zxu.masterofpainting.bean.Tab;
-import com.zxu.masterofpainting.fragment.CollectionFragment;
-import com.zxu.masterofpainting.fragment.MoreFragment;
+import com.zxu.masterofpainting.fragment.NurseFragment;
+import com.zxu.masterofpainting.fragment.DetectionFragment;
 import com.zxu.masterofpainting.fragment.TakePhotoFragment;
 import com.zxu.masterofpainting.fragment.MyFragment;
 import com.zxu.masterofpainting.widget.FragmentTabHost;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -41,8 +34,8 @@ public class MainActivity extends AppCompatActivity{
 
     private void initTab() {
         Tab tab_takephoto = new Tab(TakePhotoFragment.class,R.string.takephoto,R.drawable.selector_icon_takephoto);
-        Tab tab_photoinfo = new Tab(MoreFragment.class,R.string.photoinfo,R.drawable.selector_icon_photoinfo);
-        Tab tab_look = new Tab(CollectionFragment.class,R.string.look,R.drawable.selector_icon_look);
+        Tab tab_photoinfo = new Tab(DetectionFragment.class,R.string.detection,R.drawable.selector_icon_detection);
+        Tab tab_look = new Tab(NurseFragment.class,R.string.nurse,R.drawable.selector_icon_nurse);
         Tab tab_user = new Tab(MyFragment.class,R.string.user,R.drawable.selector_user_info);
 
         mTabs.add(tab_takephoto);

@@ -12,10 +12,10 @@ import com.zxu.masterofpainting.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoreFragment extends Fragment {
+public class DetectionFragment extends Fragment {
 
 
-    public MoreFragment() {
+    public DetectionFragment() {
         // Required empty public constructor
     }
 

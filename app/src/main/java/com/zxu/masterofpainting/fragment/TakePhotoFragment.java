@@ -161,7 +161,7 @@ public class TakePhotoFragment extends Fragment {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, TAKE_PHOTO);
-//        startActivity(new Intent(getContext(),CollectionFragment.class));
+//        startActivity(new Intent(getContext(),NurseFragment.class));
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
