@@ -36,13 +36,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Fresco.initialize(this);
         initTab();
-        initBmob();
-    }
-
-    private void initBmob() {
-        Bmob.initialize(this,"865e1d41ba44fc9fa928add29b1ccbc0");
     }
 
     private void initTab() {

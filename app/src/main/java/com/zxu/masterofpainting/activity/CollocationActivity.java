@@ -30,17 +30,7 @@ public class CollocationActivity extends AppCompatActivity {
     private String collocationname1;
     //搭配的食材
     private String collocationname2;
-    //搭配图片的URL
-    private String urlstr;
-    private String CollocationName;
-    private String CollocationPicture;
-    private String CollocationEfficacy;
-    private String CollocationIngredients;
-    private String StepPictures;
-    private String StepDetails;
-    private SimpleDraweeView simpleDraweeView;
     private SpotsDialog spotsDialog;
-    private TextView collocationEfficacyTextView;
     private TextView toobarTitle;
     private RecyclerView recyclerView;
     private Toolbar toolbar;
@@ -65,8 +55,6 @@ public class CollocationActivity extends AppCompatActivity {
         Intent intent = getIntent();
         collocationname1 = intent.getStringExtra("collocationName1");
         collocationname2 = intent.getStringExtra("collocationName2");
-        urlstr = intent.getStringExtra("urlstring");
-        //getActionBar().setTitle(collocationname1 + " + " + collocationname2);
     }
 
     private void initToolBar(){
@@ -81,7 +69,6 @@ public class CollocationActivity extends AppCompatActivity {
 
     private void getAllData(){
         BmobQuery<Collocation> collocationBmobQuery = new BmobQuery<>("CollocationActivity");
-        //collocationBmobQuery.addQueryKeys("CollocationIngredients");
         collocationBmobQuery.setLimit(1000);
         collocationBmobQuery.findObjects(new FindListener<Collocation>() {
             @Override

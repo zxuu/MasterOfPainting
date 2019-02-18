@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_mylauncher"
         android:label="@string/app_name"
@@ -54,9 +55,11 @@
             android:name=".activity.CollocationDetailActivity"
             android:theme="@style/CollocationDetailActivityTheme" />
         <activity android:name=".activity.TestActivity" />
-        <activity android:name=".activity.CollocationActivity"
-            android:theme="@style/CollocationActivityTheme">
-        </activity>
+        <activity
+            android:name=".activity.CollocationActivity"
+            android:theme="@style/CollocationActivityTheme"></activity>
+        <activity android:name=".activity.CollectionActivity"
+            android:theme="@style/CollectionActivityTheme"></activity>
     </application>
 
 </manifest>

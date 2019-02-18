@@ -28,7 +28,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     private CoordinatorTabLayout mCoordinatorTabLayout;
     private int[] mImageArray, mColorArray;
     private ArrayList<Fragment> mFragments;
-    private final String[] mTitles = {"营养成分", "食材功效", "搭配宜忌"};
+    private final String[] mTitles = {"营养成分", "食材功效", "营养搭配"};
     private ViewPager mViewPager;
     private BmobQuery<Ingredients> ingredientsBmobQuery;
     //食材名称

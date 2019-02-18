@@ -19,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.zxu.masterofpainting.Adapter.MaterialAdapter;
 import com.zxu.masterofpainting.Adapter.StepsAdapter;
 import com.zxu.masterofpainting.R;
+import com.zxu.masterofpainting.bean.Collection;
 import com.zxu.masterofpainting.bean.Collocation;
 import com.zxu.masterofpainting.bean.Material;
 import com.zxu.masterofpainting.bean.Step;
@@ -30,6 +31,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.SaveListener;
 import dmax.dialog.SpotsDialog;
 
 public class CollocationDetailActivity extends AppCompatActivity{
@@ -69,7 +71,7 @@ public class CollocationDetailActivity extends AppCompatActivity{
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CollocationDetailActivity.this, "shouc", Toast.LENGTH_SHORT).show();
+                saveCollectionData();
             }
         });
         Intent intent = getIntent();
@@ -138,11 +140,19 @@ public class CollocationDetailActivity extends AppCompatActivity{
         stepsRecyclerView.setAdapter(stepsAdapter);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.collection_menu,menu);
-//        return true;
-//    }
+    private void saveCollectionData(){
+        Collection collection = new Collection(objectId);
+        collection.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    Toast.makeText(CollocationDetailActivity.this, "收藏成功!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CollocationDetailActivity.this, "哎呀，收藏失败啦", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
