@@ -21,7 +21,7 @@ public class EfficacyAdapter extends RecyclerView.Adapter<EfficacyAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.efficacy_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_efficacy, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

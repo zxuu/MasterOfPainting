@@ -51,7 +51,7 @@ public class NutritionalComponentsFragment extends Fragment{
     private void initView(View view) {
         listView = (ListView) view.findViewById(R.id.chengfen_list);
         mPieChart = (PieChart) view.findViewById(R.id.mPieChart);
-        nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.nutritional_item, ingredientsInformationList);
+        nutritionalAdapter = new NutritionalAdapter(getContext(), R.layout.item_nutritional, ingredientsInformationList);
     }
 
     private void getAllData() {

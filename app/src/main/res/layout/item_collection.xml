@@ -58,9 +58,10 @@
             android:id="@+id/delete_btn"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/bt_shape"
             android:text="删除"
-            android:textColor="@android:color/white"/>
+            android:textSize="20dp"
+            android:textColor="@android:color/white" />
     </com.mcxtzhang.swipemenulib.SwipeMenuLayout>
 
 </android.support.v7.widget.CardView>
