@@ -99,7 +99,7 @@ public class CollocationDetailActivity extends AppCompatActivity{
         collocationBmobQuery.getObject(objectId, new QueryListener<Collocation>() {
             @Override
             public void done(Collocation collocation, BmobException e) {
-                if (e == null) {
+                if (e == null && collocation != null) {
                     collocationName = collocation.getCollocationName();
                     collocationPicture = collocation.getCollocationPicture();
                     collocationEfficacy = collocation.getCollocationEfficacy();
@@ -110,7 +110,8 @@ public class CollocationDetailActivity extends AppCompatActivity{
                     setData();
                     spotsDialog.dismiss();
                 } else {
-                    Toast.makeText(CollocationDetailActivity.this, "哎呀，没查找到~", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(CollocationDetailActivity.this, "哎呀，没查找到~", Toast.LENGTH_SHORT).show();
+                    spotsDialog.dismiss();
                 }
             }
         });

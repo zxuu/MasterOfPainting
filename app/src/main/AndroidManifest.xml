@@ -57,9 +57,15 @@
         <activity android:name=".activity.TestActivity" />
         <activity
             android:name=".activity.CollocationActivity"
-            android:theme="@style/CollocationActivityTheme"></activity>
-        <activity android:name=".activity.CollectionActivity"
-            android:theme="@style/CollectionActivityTheme"></activity>
+            android:theme="@style/CollocationActivityTheme" />
+        <activity
+            android:name=".activity.CollectionActivity"
+            android:theme="@style/CollectionActivityTheme" />
+        <activity
+            android:name=".activity.LabelDetailActivity"
+            android:theme="@style/LabelDetailActivityTheme" />
+        <activity android:name=".activity.LabelFineCollocationActivity"
+            android:theme="@style/LabelDetailActivityTheme"/>
     </application>
 
 </manifest>

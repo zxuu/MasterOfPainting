@@ -1,6 +1,7 @@
 package com.zxu.masterofpainting.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import com.paulyung.laybellayout.LaybelLayout;
 import com.zxu.masterofpainting.Constants;
 import com.zxu.masterofpainting.R;
+import com.zxu.masterofpainting.activity.LabelDetailActivity;
 
 import java.util.List;
 
@@ -43,8 +45,8 @@ public class LabelMenuContenAdapter extends BaseAdapter {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final int labelContentPosition = position;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+         //int labelContentPosition = position;
         String dataBean = foodDatas.get(position);
         ViewHold viewHold = null;
         if (convertView == null) {
@@ -55,7 +57,10 @@ public class LabelMenuContenAdapter extends BaseAdapter {
             viewHold.gridView.setOnItemClickListener(new LaybelLayout.OnItemClickListener() {
                 @Override
                 public void onItemClick(int p) {
-                    Toast.makeText(context, "你点击了"+Constants.labelMenuContent[labelContentPosition][p], Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context,LabelDetailActivity.class);
+                    intent.putExtra("labelName", Constants.labelMenuContent[position][p]);
+                    context.startActivity(intent);
+                    //Toast.makeText(context, "你点击了"+Constants.labelMenuContent[labelContentPosition][p], Toast.LENGTH_SHORT).show();
                 }
             });
             convertView.setTag(viewHold);

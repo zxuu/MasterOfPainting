@@ -10,4 +10,7 @@
 
     <string name="material">原料</string>
     <string name="collection">我收藏的营养搭配</string>
+    <string name="labelcollocation">相关的营养搭配</string>
+    <string name="recommend">宜吃</string>
+    <string name="badrecommend">忌吃</string>
 </resources>

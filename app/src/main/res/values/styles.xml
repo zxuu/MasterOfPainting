@@ -21,5 +21,6 @@
 
     <style name="CollocationActivityTheme" parent="ShowIngredientsActivityTheme"/>
     <style name="CollectionActivityTheme" parent="ShowIngredientsActivityTheme"/>
+    <style name="LabelDetailActivityTheme" parent="ShowIngredientsActivityTheme"/>
 
 </resources>
