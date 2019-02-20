@@ -30,15 +30,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:theme="@style/ShowIngredientsActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
 
         <provider
@@ -67,8 +66,10 @@
         <activity
             android:name=".activity.LabelDetailActivity"
             android:theme="@style/LabelDetailActivityTheme" />
-        <activity android:name=".activity.LabelFineCollocationActivity"
-            android:theme="@style/LabelDetailActivityTheme"/>
+        <activity
+            android:name=".activity.LabelFineCollocationActivity"
+            android:theme="@style/LabelDetailActivityTheme" />
+        <activity android:name=".activity.PhysiqueActivity"></activity>
     </application>
 
 </manifest>

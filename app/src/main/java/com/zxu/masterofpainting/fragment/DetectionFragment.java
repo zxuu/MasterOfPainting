@@ -1,6 +1,7 @@
 package com.zxu.masterofpainting.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.zxu.masterofpainting.Constants;
 import com.zxu.masterofpainting.R;
+import com.zxu.masterofpainting.activity.PhysiqueActivity;
 import com.zxu.masterofpainting.utils.MyUtil;
 
 import java.util.ArrayList;
@@ -76,11 +78,11 @@ public class DetectionFragment extends Fragment implements SwipeStack.SwipeStack
 
     @Override
     public void onStackEmpty() {
-        String[] l = new String[scoreList.size()];
-        for (int i = 0; i < l.length; i++) {
-            l[i] = String.valueOf(scoreList.get(i));
-        }
-        Toast.makeText(getContext(), l.length+"", Toast.LENGTH_SHORT).show();
+        String physiqueStr = getPhysiqueStr(scoreList);
+        Intent intent = new Intent(getContext(),PhysiqueActivity.class);
+        intent.putExtra("physique", physiqueStr);
+        startActivity(intent);
+        //Toast.makeText(getContext(), physiqueStr, Toast.LENGTH_SHORT).show();
     }
 
     public class SwipeStackAdapter extends BaseAdapter {
@@ -128,6 +130,25 @@ public class DetectionFragment extends Fragment implements SwipeStack.SwipeStack
 
             return convertView;
         }
+    }
+
+    private String getPhysiqueStr(List<Integer> scoreList){
+        int[] n = new int[9];
+        for (int i = 0; i < 9; i++) {
+            int sum = 0;
+            for (int j = 0; j < 7; j++) {
+                sum = sum + scoreList.get(i * 7 + j);
+            }
+            n[i] = sum;
+        }
+        int max = n[0];
+        int k = 0;
+        for (int i = 1; i < n.length; i++) {
+            if (n[i] > max) {
+                k = i;
+            }
+        }
+        return Constants.physiqueStr[k];
     }
 
 }

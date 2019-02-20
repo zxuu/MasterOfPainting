@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.zxu.masterofpainting.R;
+import com.zxu.masterofpainting.activity.PhysiqueActivity;
 import com.zxu.masterofpainting.activity.ShowIngredientsActivity;
 
 import java.io.File;
@@ -65,7 +66,10 @@ public class TakePhotoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //takePhoto();
-                startActivity(new Intent(getContext(),ShowIngredientsActivity.class));
+                //startActivity(new Intent(getContext(),ShowIngredientsActivity.class));
+                Intent intent = new Intent(getContext(),PhysiqueActivity.class);
+                intent.putExtra("physique", "气虚型");
+                startActivity(intent);
             }
         });
     }
