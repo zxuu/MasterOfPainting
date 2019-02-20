@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">活健康</string>
+    <string name="app_name">健康养生</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -13,4 +13,10 @@
     <string name="labelcollocation">相关的营养搭配</string>
     <string name="recommend">宜吃</string>
     <string name="badrecommend">忌吃</string>
+
+    <string name="meiyou">没有</string>
+    <string name="henshao">很少</string>
+    <string name="youshi">有时</string>
+    <string name="jingchang">经常</string>
+    <string name="zongshi">总是</string>
 </resources>

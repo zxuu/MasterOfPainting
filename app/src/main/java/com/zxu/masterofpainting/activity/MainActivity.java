@@ -1,8 +1,11 @@
 package com.zxu.masterofpainting.activity;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity{
 
     private FragmentTabHost mTabhost;
     private LayoutInflater mInflater;
+    private Toolbar toolbar;
+    private TextView toobarTitle;
     private List<Tab> mTabs = new ArrayList<>(4);
 
     @Override
@@ -29,7 +34,21 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initToolBar();
         initTab();
+    }
+
+    private void initToolBar(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        toobarTitle = (TextView) findViewById(R.id.toolbar_main_title);
+        toobarTitle.setText(R.string.app_name);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
     }
 
     private void initTab() {
