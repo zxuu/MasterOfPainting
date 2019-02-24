@@ -52,6 +52,7 @@ public class DetectionFragment extends Fragment implements SwipeStack.SwipeStack
 
     }
     private void fillWithTestData() {
+        //mData.add("根据国家中医学会发布 《 中医体质分类与判定 》 体质相关疾病的防治测试时将自动保存，、养生保健等提供依据。不适用于孕妇，请耐心作答");
         for (int i = 0; i < Constants.cardQuestion.length; i++) {
             for (int j = 0; j < Constants.cardQuestion[i].length; j++) {
                 mData.add(Constants.cardQuestion[i][j]);
@@ -78,7 +79,8 @@ public class DetectionFragment extends Fragment implements SwipeStack.SwipeStack
 
     @Override
     public void onStackEmpty() {
-        String physiqueStr = getPhysiqueStr(scoreList);
+//        String physiqueStr = getPhysiqueStr(scoreList);
+        String physiqueStr = "气虚质";
         Intent intent = new Intent(getContext(),PhysiqueActivity.class);
         intent.putExtra("physique", physiqueStr);
         startActivity(intent);

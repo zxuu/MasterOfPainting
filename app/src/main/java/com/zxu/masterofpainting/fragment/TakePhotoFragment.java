@@ -66,10 +66,10 @@ public class TakePhotoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //takePhoto();
-                //startActivity(new Intent(getContext(),ShowIngredientsActivity.class));
-                Intent intent = new Intent(getContext(),PhysiqueActivity.class);
-                intent.putExtra("physique", "气虚型");
-                startActivity(intent);
+                startActivity(new Intent(getContext(),ShowIngredientsActivity.class));
+//                Intent intent = new Intent(getContext(),PhysiqueActivity.class);
+//                intent.putExtra("physique", "气虚质");
+//                startActivity(intent);
             }
         });
     }

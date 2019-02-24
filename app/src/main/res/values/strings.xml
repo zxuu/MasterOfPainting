@@ -19,4 +19,6 @@
     <string name="youshi">有时</string>
     <string name="jingchang">经常</string>
     <string name="zongshi">总是</string>
+
+    <string name="myphysique">我的体质</string>
 </resources>

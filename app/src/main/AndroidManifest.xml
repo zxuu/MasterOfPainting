@@ -69,7 +69,8 @@
         <activity
             android:name=".activity.LabelFineCollocationActivity"
             android:theme="@style/LabelDetailActivityTheme" />
-        <activity android:name=".activity.PhysiqueActivity"></activity>
+        <activity android:name=".activity.PhysiqueActivity"
+            android:theme="@style/ShowIngredientsActivityTheme"/>
     </application>
 
 </manifest>

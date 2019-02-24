@@ -45,7 +45,10 @@ public class SuitableAvoidAdapter extends RecyclerView.Adapter<SuitableAvoidAdap
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
                 SuitableAvoidItem suitableAvoidItem = mSuitableAvoidItemList.get(position);
-                Intent intent = new Intent(v.getContext(),TestActivity.class);
+                Intent intent = new Intent(v.getContext(),CollocationActivity.class);
+                intent.putExtra("collocationName1", Constants.ingredientsName);
+                intent.putExtra("collocationName2", suitableAvoidItem.getCollocationName());
+                intent.putExtra("urlstring", "http://site.meishij.net/r/64/103/9963314/s9963314_150877710622523.jpg");
                 v.getContext().startActivity(intent);
             }
         });
