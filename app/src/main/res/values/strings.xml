@@ -21,4 +21,6 @@
     <string name="zongshi">总是</string>
 
     <string name="myphysique">我的体质</string>
+    <string name="detectionexplain">根据国家中医学会发布 《 中医体质分类与判定 》 体质相关疾病的防治测试时将自动保存，、养生保健等提供依据。不适用于孕妇，请耐心作答呦</string>
+    <string name="detectiontitle">测试说明</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.zxu.masterofpainting.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,9 +40,25 @@ public class DetectionFragment extends Fragment implements SwipeStack.SwipeStack
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detection, container, false);
 
+        showDialog(view);
         initView(view);
         fillWithTestData();
         return view;
+    }
+
+    private void showDialog(final View view){
+        AlertDialog alertDialog1 = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.detectiontitle)//标题
+                .setMessage(R.string.detectionexplain)//内容
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        initView(view);
+                        fillWithTestData();
+                    }
+                })
+                .create();
+        alertDialog1.show();
     }
 
     private void initView(View view){
