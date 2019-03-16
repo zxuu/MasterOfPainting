@@ -54,6 +54,8 @@ public class LabelDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_label_detail);
+        spotsDialog = new SpotsDialog(this,"拼命加载中...");
+        spotsDialog.show();
         initView();
         getData();
         loadBmobData();
@@ -68,8 +70,6 @@ public class LabelDetailActivity extends AppCompatActivity {
         collocationButton = (Button) findViewById(R.id.collocation_btn);
         recommendRecyclerView = (RecyclerView) findViewById(R.id.recommend_recyclerview);
         badRecommendRecyclerView = (RecyclerView) findViewById(R.id.badrecommend_recyclerview);
-        spotsDialog = new SpotsDialog(this,"拼命加载中...");
-        spotsDialog.show();
         collocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

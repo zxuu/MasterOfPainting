@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.zxu.masterofpainting.Adapter.CollectionAdapter;
 import com.zxu.masterofpainting.Adapter.CollocationAdapter;
-import com.zxu.masterofpainting.MyApplication;
 import com.zxu.masterofpainting.R;
 import com.zxu.masterofpainting.bean.Collection;
 import com.zxu.masterofpainting.bean.Collocation;

@@ -1,12 +1,10 @@
-package com.zxu.masterofpainting.fragment;
-
+package com.zxu.masterofpainting.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,68 +15,59 @@ import android.widget.Toast;
 
 import com.zxu.masterofpainting.Constants;
 import com.zxu.masterofpainting.R;
-import com.zxu.masterofpainting.activity.PhysiqueActivity;
 import com.zxu.masterofpainting.bean.User;
 import com.zxu.masterofpainting.utils.MyUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 import link.fls.swipestack.SwipeStack;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class DetectionFragment extends Fragment implements SwipeStack.SwipeStackListener, View.OnClickListener{
-    private ArrayList<String> mData;
+public class TestingActivity extends AppCompatActivity implements SwipeStack.SwipeStackListener, View.OnClickListener {
+
+    private ArrayList<String> mData = new ArrayList<>();
     private SwipeStack mSwipeStack;
     private SwipeStackAdapter mAdapter;
     private List<Integer> scoreList = new ArrayList<>();
-    private View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detection, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_testing);
 
-        showDialog(view);
-        initView(view);
-        fillWithTestData();
-        return view;
+        showDialog();
+        initView();
     }
 
-    private void showDialog(final View view){
-        AlertDialog alertDialog1 = new AlertDialog.Builder(getContext())
+    private void showDialog(){
+        AlertDialog alertDialog1 = new AlertDialog.Builder(this)
                 .setTitle(R.string.detectiontitle)//标题
                 .setMessage(R.string.detectionexplain)//内容
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        initView(view);
-                        fillWithTestData();
+//                        initView();
+//                        fillWithTestData();
                     }
                 })
                 .create();
         alertDialog1.show();
     }
 
-    private void initView(View view){
-        mSwipeStack = (SwipeStack) view.findViewById(R.id.swipeStack);
-        mData = new ArrayList<>();
-        mAdapter = new SwipeStackAdapter(mData);
-        mSwipeStack.setAdapter(mAdapter);
-        mSwipeStack.setListener(this);
-
-    }
-    private void fillWithTestData() {
-        //mData.add("根据国家中医学会发布 《 中医体质分类与判定 》 体质相关疾病的防治测试时将自动保存，、养生保健等提供依据。不适用于孕妇，请耐心作答");
+    private void initView(){
+        mSwipeStack = (SwipeStack) findViewById(R.id.swipeStack2);
         for (int i = 0; i < Constants.cardQuestion.length; i++) {
             for (int j = 0; j < Constants.cardQuestion[i].length; j++) {
                 mData.add(Constants.cardQuestion[i][j]);
             }
         }
+        mAdapter = new SwipeStackAdapter(mData);
+        mSwipeStack.setAdapter(mAdapter);
+        mSwipeStack.setListener(this);
+
     }
 
     @Override
@@ -101,9 +90,22 @@ public class DetectionFragment extends Fragment implements SwipeStack.SwipeStack
     @Override
     public void onStackEmpty() {
 //        String physiqueStr = getPhysiqueStr(scoreList);
-        String physiqueStr = "气虚质";
-        Intent intent = new Intent(getContext(),PhysiqueActivity.class);
-        intent.putExtra("physique", physiqueStr);
+        BmobUser.getCurrentUser(User.class).setTestState(1+"");
+        User user = new User();
+        user.setTestState("" + 1);
+        user.setObjectId(BmobUser.getCurrentUser(User.class).getObjectId());
+        user.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (null == e) {
+                    Toast.makeText(TestingActivity.this, "state suc", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(TestingActivity.this, "state fail", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        Intent intent = new Intent(this,PhysiqueActivity.class);
+        intent.putExtra("physique", Constants.physiqueStr[1]);
         startActivity(intent);
         //Toast.makeText(getContext(), physiqueStr, Toast.LENGTH_SHORT).show();
     }
@@ -173,5 +175,4 @@ public class DetectionFragment extends Fragment implements SwipeStack.SwipeStack
         }
         return Constants.physiqueStr[k];
     }
-
 }

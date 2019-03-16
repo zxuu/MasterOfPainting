@@ -16,11 +16,10 @@ import com.zxu.masterofpainting.bean.Collection;
 
 import org.w3c.dom.Text;
 
-public class PhysiqueActivity extends AppCompatActivity implements View.OnClickListener {
+public class PhysiqueActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView title;
     private TextView myPhysiqueTextView;
-    private Button physiqueCollocationBtn;
     private String physiquestr;
 
 
@@ -36,8 +35,6 @@ public class PhysiqueActivity extends AppCompatActivity implements View.OnClickL
         toolbar = (Toolbar) findViewById(R.id.toolbar_physique);
         title = (TextView) findViewById(R.id.toolbar_physique_title);
         myPhysiqueTextView = (TextView) findViewById(R.id.physique_name_text_view);
-        physiqueCollocationBtn = (Button) findViewById(R.id.physique_collocation_btn);
-        physiqueCollocationBtn.setOnClickListener(this);
         physiquestr = getIntent().getStringExtra("physique");
         myPhysiqueTextView.setText(physiquestr);
         setSupportActionBar(toolbar);
@@ -45,15 +42,6 @@ public class PhysiqueActivity extends AppCompatActivity implements View.OnClickL
         if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.physique_collocation_btn:
-                startActivity(new Intent(this,CollectionActivity.class));
-                break;
         }
     }
 

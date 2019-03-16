@@ -171,15 +171,6 @@
             \n         中成药：补中益气丸、参苓白术散等
             \n         穴位调理：中脘、建里、气海、关元、足三里、肺腧、脾腧等，可艾灸。"/>
 
-            <Button
-                android:id="@+id/physique_collocation_btn"
-                android:layout_width="310dp"
-                android:layout_height="40dp"
-                android:text="进入我的今天营养搭配"
-                android:background="@drawable/bt_shape"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="5dp"
-                android:layout_gravity="center_horizontal"/>
         </LinearLayout>
     </ScrollView>
 
